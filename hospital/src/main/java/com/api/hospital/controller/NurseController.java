@@ -43,4 +43,18 @@ public class NurseController {
         System.out.println("unsuccessful login " + username);
         return ResponseEntity.ok(false);  
     }
+    
+    
+    //Testing
+    @GetMapping("/search")
+    public ResponseEntity<List<Nurse>> searchNursesByName(@RequestParam String nombre) {
+        List<Nurse> result = new ArrayList<>();
+        for (Nurse nurse : nurses) {
+            if (nurse.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                result.add(nurse);
+            }
+        }
+        return ResponseEntity.ok(result);
+    }
+
 }
