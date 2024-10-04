@@ -30,6 +30,11 @@ public class NurseController {
         nurses.add(new Nurse("Elena", "elena99", "elena!pass"));
         nurses.add(new Nurse("Raul", "raulh", "raulSegura"));
     }
+ // Endpoint para mostrar todos los enfermeros
+    @GetMapping("/enfermeros")
+    public List<Nurse> getAllNurses() {
+    	return nurses;
+    }
  // Endpoint para validar el login
     @PostMapping("/login")
     public ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
