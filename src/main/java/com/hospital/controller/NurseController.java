@@ -24,7 +24,7 @@ public class NurseController {
 	
 	 // Endpoint para mostrar todos los enfermeros
 	@GetMapping(path = "/enfermeros")
-	public @ResponseBody Iterable<Nurse> getAllUsers() {
+	public @ResponseBody Iterable<Nurse> getAllNurses() {
 		return nurseRepository.findAll();
 	}
 	
