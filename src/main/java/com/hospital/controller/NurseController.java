@@ -45,33 +45,5 @@ public class NurseController {
         return ResponseEntity.ok(false);
     }
 	
-	 // Endpoint para validar el login
-	/*
-	@PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-        for (Nurse nurse : nurses) {
-            // Comparar el nombre de usuario y la contraseña
-            if (username.equals(nurse.getUsername()) && password.equals(nurse.getPassword())) {
-                System.out.println("Login successful: " + nurse.getUsername());
-                return ResponseEntity.ok(true);  
-            }
-        }
-        System.out.println("unsuccessful login " + username);
-        return ResponseEntity.ok(false);  
-    }
-	 */
-	
-	// Endpoint para buscar por nombre
-	/*
-	@GetMapping("/search")
-    public ResponseEntity<List<Nurse>> searchNursesByName(@RequestParam String nombre) {
-        List<Nurse> result = new ArrayList<>();
-        for (Nurse nurse : nurses) {
-            if (nurse.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                result.add(nurse);
-            }
-        }
-        return ResponseEntity.ok(result);
-    }
-	 */
+
 }
