@@ -27,6 +27,23 @@ public class NurseController {
 	public @ResponseBody Iterable<Nurse> getAllNurses() {
 		return nurseRepository.findAll();
 	}
+	@PostMapping("/login")
+    public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
+        // Obtener todos los enfermeros
+        Iterable<Nurse> nurses = nurseRepository.findAll();
+ 
+        // Busca username y password
+        for (Nurse nurse : nurses) {
+            if (nurse.getUsername().equals(username) && nurse.getPassword().equals(password)) {
+                System.out.println("Login successful: " + nurse.getUsername());
+                return ResponseEntity.ok(true);  
+            }
+        }
+        
+        // Si no se encuentra un enfermero con las credenciales correctas
+        System.out.println("Unsuccessful login: " + username);
+        return ResponseEntity.ok(false);
+    }
 	
 	 // Endpoint para validar el login
 	/*
