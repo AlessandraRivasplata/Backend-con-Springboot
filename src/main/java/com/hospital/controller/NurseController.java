@@ -46,4 +46,32 @@ public class NurseController {
     }
 	
 
+	@GetMapping("/buscarEnfermeros")
+	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
+	    // Validar si el nombre está vacío o es nulo
+	    if (name == null || name.trim().isEmpty()) {
+	        return ResponseEntity.badRequest().body("Debe proporcionar un nombre válido.");
+	    }
+
+	    // Buscar enfermeros cuyo nombre contenga la cadena proporcionada
+	    List<Nurse> nurses = nurseRepository.findByNameContaining(name);
+
+	    // Si no hay coincidencias, devolver un mensaje de error
+	    if (nurses.isEmpty()) {
+	        return ResponseEntity.status(404).body("Usuario no encontrado");
+	    }
+
+	    // Devolver la lista de enfermeros si hay coincidencias
+	    return ResponseEntity.ok(nurses);
+	}
+
+
+
+	
+	
+	
+	
+	
+	
+	
 }
