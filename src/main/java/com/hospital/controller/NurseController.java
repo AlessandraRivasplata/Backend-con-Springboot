@@ -2,12 +2,15 @@ package com.hospital.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,14 +67,25 @@ public class NurseController {
 	    // Devolver la lista de enfermeros si hay coincidencias
 	    return ResponseEntity.ok(nurses);
 	}
+	
+	@PutMapping("/updateEnfermeros")
+	public @ResponseBody ResponseEntity<String> updateNurse(@RequestParam int id, @RequestParam String name, @RequestParam String username, @RequestParam String password) {
+	    if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Datos inválidos o incompletos");// 400 ko
+	    }
+	    
+	    Optional<Nurse> optionalNurse = nurseRepository.findById(id);
+	    if (!optionalNurse.isPresent()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Enfermero no encontrado");// 404 ko
+	    }
+	    
+	    Nurse nurseToUpdate = optionalNurse.get();//El .get() se usa para recuperar valores de optional que pueden ser null
+	    nurseToUpdate.setNombre(name);
+	    nurseToUpdate.setUsername(username);
+	    nurseToUpdate.setPassword(password); 
 
+	    nurseRepository.save(nurseToUpdate);
+	    return ResponseEntity.ok("Enfermero actualizado correctamente");// 200 ok
+	}
 
-
-	
-	
-	
-	
-	
-	
-	
 }
