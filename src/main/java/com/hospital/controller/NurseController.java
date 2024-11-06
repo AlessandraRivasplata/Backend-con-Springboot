@@ -27,8 +27,9 @@ public class NurseController {
 
 	// Endpoint show all data from all Nurses
 	@GetMapping(path = "/allnurses")
-	public @ResponseBody Iterable<Nurse> getAllNurses() {
-		return nurseRepository.findAll();
+	public ResponseEntity<Iterable<Nurse>> getAllNurses() {
+		Iterable<Nurse> nurses = nurseRepository.findAll();
+		return ResponseEntity.ok(nurses);
 	}
 
 	@PostMapping("/login")
