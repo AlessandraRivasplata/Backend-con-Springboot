@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import entity.Nurse;
 
 public interface NurseRepository extends CrudRepository<Nurse, Integer> {
-    @Query("SELECT n FROM Nurse n WHERE n.nombre LIKE %:name%")
+    @Query("SELECT n FROM Nurse n WHERE n.name LIKE %:name%")
     List<Nurse> findByNameContaining(@Param("name") String name);
 
 }

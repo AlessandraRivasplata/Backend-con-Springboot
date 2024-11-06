@@ -25,17 +25,16 @@ public class NurseController {
 	@Autowired 
 	private NurseRepository nurseRepository;
 	
-	 // Endpoint para mostrar todos los enfermeros
-	@GetMapping(path = "/enfermeros")
+	 // Endpoint show all data from all Nurses
+	@GetMapping(path = "/allnurses")
 	public @ResponseBody Iterable<Nurse> getAllNurses() {
 		return nurseRepository.findAll();
 	}
 	@PostMapping("/login")
     public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-        // Obtener todos los enfermeros
         Iterable<Nurse> nurses = nurseRepository.findAll();
  
-        // Busca username y password
+        // Find by name and password
         for (Nurse nurse : nurses) {
             if (nurse.getUsername().equals(username) && nurse.getPassword().equals(password)) {
                 System.out.println("Login successful: " + nurse.getUsername());
@@ -43,49 +42,49 @@ public class NurseController {
             }
         }
         
-        // Si no se encuentra un enfermero con las credenciales correctas
+        // If nurse not found
         System.out.println("Unsuccessful login: " + username);
         return ResponseEntity.ok(false);
     }
 	
 
-	@GetMapping("/buscarEnfermeros")
+	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
-	    // Validar si el nombre está vacío o es nulo
+	    // Check if var name is not null
 	    if (name == null || name.trim().isEmpty()) {
-	        return ResponseEntity.badRequest().body("Debe proporcionar un nombre válido.");
+	        return ResponseEntity.badRequest().body("Invalid name");
 	    }
 
-	    // Buscar enfermeros cuyo nombre contenga la cadena proporcionada
+	    // Search nurse by name
 	    List<Nurse> nurses = nurseRepository.findByNameContaining(name);
 
-	    // Si no hay coincidencias, devolver un mensaje de error
+	    // If Nurse by name not found
 	    if (nurses.isEmpty()) {
-	        return ResponseEntity.status(404).body("Usuario no encontrado");
+	        return ResponseEntity.status(404).body("Nurse not found");
 	    }
 
-	    // Devolver la lista de enfermeros si hay coincidencias
+	    // If Nurse by name is found
 	    return ResponseEntity.ok(nurses);
 	}
 	
-	@PutMapping("/updateEnfermeros")
+	@PutMapping("/updatenurse")
 	public @ResponseBody ResponseEntity<String> updateNurse(@RequestParam int id, @RequestParam String name, @RequestParam String username, @RequestParam String password) {
 	    if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Datos inválidos o incompletos");// 400 ko
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");// 400 ko
 	    }
 	    
 	    Optional<Nurse> optionalNurse = nurseRepository.findById(id);
 	    if (!optionalNurse.isPresent()) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Enfermero no encontrado");// 404 ko
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Nurse not found");// 404 ko
 	    }
-	    
-	    Nurse nurseToUpdate = optionalNurse.get();//El .get() se usa para recuperar valores de optional que pueden ser null
-	    nurseToUpdate.setNombre(name);
+	    //Get nurse values
+	    Nurse nurseToUpdate = optionalNurse.get();
+	    nurseToUpdate.setName(name);
 	    nurseToUpdate.setUsername(username);
 	    nurseToUpdate.setPassword(password); 
 
 	    nurseRepository.save(nurseToUpdate);
-	    return ResponseEntity.ok("Enfermero actualizado correctamente");// 200 ok
+	    return ResponseEntity.ok("Nurse Updated");// 200 ok
 	}
 
 }
