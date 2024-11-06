@@ -26,7 +26,7 @@ public class NurseController {
 	private NurseRepository nurseRepository;
 	
 	 // Endpoint show all data from all Nurses
-	@GetMapping(path = "/allNurses")
+	@GetMapping(path = "/allnurses")
 	public @ResponseBody Iterable<Nurse> getAllNurses() {
 		return nurseRepository.findAll();
 	}
@@ -48,7 +48,7 @@ public class NurseController {
     }
 	
 
-	@GetMapping("/findNurseByName")
+	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
 	    // Check if var name is not null
 	    if (name == null || name.trim().isEmpty()) {
@@ -67,7 +67,7 @@ public class NurseController {
 	    return ResponseEntity.ok(nurses);
 	}
 	
-	@PutMapping("/updateNurse")
+	@PutMapping("/updatenurse")
 	public @ResponseBody ResponseEntity<String> updateNurse(@RequestParam int id, @RequestParam String name, @RequestParam String username, @RequestParam String password) {
 	    if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");// 400 ko
