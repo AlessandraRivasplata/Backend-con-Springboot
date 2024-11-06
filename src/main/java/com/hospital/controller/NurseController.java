@@ -20,7 +20,7 @@ import com.hospital.dao.NurseRepository;
 import entity.Nurse;
 
 @Controller
-@RequestMapping(path = "/hospital")
+@RequestMapping(path = "/nurse")
 public class NurseController {
 	@Autowired
 	private NurseRepository nurseRepository;
