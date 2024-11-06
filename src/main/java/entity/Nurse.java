@@ -14,8 +14,8 @@ public class Nurse {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-    @JsonProperty("nombre")
-    private String nombre;
+    @JsonProperty("name")
+    private String name;
 
     @JsonProperty("username")
     private String username;
@@ -31,12 +31,12 @@ public class Nurse {
       this.id = id;
     }
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getUsername() {
