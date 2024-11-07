@@ -35,20 +35,20 @@ public class NurseController {
 
 	@PostMapping("/login")
 	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-		Iterable<Nurse> nurses = nurseRepository.findAll();
+	    // Busca directamente una enfermera con el username y password proporcionados
+	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
 
-		// Find by name and password
-		for (Nurse nurse : nurses) {
-			if (nurse.getUsername().equals(username) && nurse.getPassword().equals(password)) {
-				System.out.println("Login successful: " + nurse.getUsername());
-				return ResponseEntity.ok(true);
-			}
-		}
+	    // Verifica si se encontró una coincidencia
+	    if (nurse.isPresent()) {
+	        System.out.println("Login successful: " + nurse.get().getUsername());
+	        return ResponseEntity.ok(true);
+	    }
 
-		// If nurse not found
-		System.out.println("Unsuccessful login: " + username);
-		return ResponseEntity.ok(false);
+	    // Si no se encontró ninguna coincidencia
+	    System.out.println("Unsuccessful login: " + username);
+	    return ResponseEntity.ok(false);
 	}
+
 
 	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
