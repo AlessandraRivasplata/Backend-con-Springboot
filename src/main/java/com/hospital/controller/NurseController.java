@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,11 +69,10 @@ public class NurseController {
 		return ResponseEntity.ok(nurses);
 	}
 
-	@PutMapping("/updatenurse")
-	public @ResponseBody ResponseEntity<String> updateNurse(@RequestParam int id, @RequestParam String name,
+	@PutMapping("/updatenurse/{id}")
+	public @ResponseBody ResponseEntity<String> updateNurse(@PathVariable int id, @RequestParam String name,
 			@RequestParam String username, @RequestParam String password) {
-		if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null
-				|| password.isEmpty()) {
+		if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");// 400 ko
 		}
 
@@ -89,5 +89,4 @@ public class NurseController {
 		nurseRepository.save(nurseToUpdate);
 		return ResponseEntity.ok("Nurse Updated");// 200 ok
 	}
-
 }
