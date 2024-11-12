@@ -12,7 +12,7 @@ public interface NurseRepository extends CrudRepository<Nurse, Integer> {
 	@Query("SELECT n FROM Nurse n WHERE n.name LIKE %:name%")
 	List<Nurse> findByNameContaining(@Param("name") String name);
 
-	// Método para buscar por username y password
+	// Method to search by username and password 
 	@Query("SELECT n FROM Nurse n WHERE n.username = :username AND n.password = :password")
 	Optional<Nurse> findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }

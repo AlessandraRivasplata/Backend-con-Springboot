@@ -35,19 +35,21 @@ public class NurseController {
 
 	@PostMapping("/login")
 	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-	    // Busca directamente una enfermera con el username y password proporcionados
+	    // Directly search for a nurse with the provided username and password
 	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
 
-	    // Verifica si se encontró una coincidencia
+	    // Check if a matching nurse was found
 	    if (nurse.isPresent()) {
 	        System.out.println("Login successful: " + nurse.get().getUsername());
 	        return ResponseEntity.ok(true);
 	    }
 
-	    // Si no se encontró ninguna coincidencia
+	    // If no matching nurse is found, return 401 Unauthorized status
 	    System.out.println("Unsuccessful login: " + username);
-	    return ResponseEntity.ok(false);
+	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
 	}
+
+
 
 
 	@GetMapping("/findnursebyname")
