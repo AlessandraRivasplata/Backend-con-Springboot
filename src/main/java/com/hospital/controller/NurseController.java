@@ -89,4 +89,25 @@ public class NurseController {
 		nurseRepository.save(nurseToUpdate);
 		return ResponseEntity.ok("Nurse Updated");// 200 ok
 	}
+	// #PR05 1.1 Crear un nuevo enfermero (201 ok, 400 kc)
+	@PostMapping("/createnurse")
+	public ResponseEntity<String> createNurse(@RequestParam String name, 
+	                                          @RequestParam String username, 
+	                                          @RequestParam String password) {
+		// Validate that the data is not empty
+	    if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");
+	    }
+
+	 // Create and save the new nurse
+	    Nurse newNurse = new Nurse();
+	    newNurse.setName(name);
+	    newNurse.setUsername(username);
+	    newNurse.setPassword(password);
+
+	    nurseRepository.save(newNurse);
+	    
+	    return ResponseEntity.status(HttpStatus.CREATED).body("Nurse created successfully");
+	}
+
 }
