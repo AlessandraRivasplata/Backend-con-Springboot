@@ -35,9 +35,10 @@ public class NurseController {
 	}
 
 	// Endpoint for login
-	@PostMapping("/logi243n")
-	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
+	@PostMapping("/login")
+	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String password) {
 	    // Directly search for a nurse with the provided username and password
+		String username = null;
 	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
 
 	    if (nurse.isPresent()) {
