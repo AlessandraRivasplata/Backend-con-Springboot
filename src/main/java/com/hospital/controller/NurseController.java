@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -95,6 +96,7 @@ public class NurseController {
 		return ResponseEntity.ok("Nurse Updated"); // 200 OK
 	}
 
+
 	// Endpoint to find nurse by id
 	@GetMapping("/findnursebyid/{id}")
 	public @ResponseBody ResponseEntity<?> getNurseById(@PathVariable int id) {
@@ -130,6 +132,20 @@ public class NurseController {
 	    
 	    return ResponseEntity.status(HttpStatus.CREATED).body("Nurse created successfully");
 	}
+	
+	// #PR05 1.4 Delete nurse by ID (200 OK, 404 Not Found)
+	@DeleteMapping("/deletenurse/{id}")
+	public ResponseEntity<String> deleteNurseById(@PathVariable int id) {
+	    // Check if the nurse exists by ID
+	    if (nurseRepository.existsById(id)) {
+	        nurseRepository.deleteById(id); // Delete the nurse
+	        return ResponseEntity.ok("Nurse deleted successfully");
+	    } else {
+	        // If nurse not found, return 404 Not Found
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Nurse not found");
+	    }
+	}
+
 
 }
 
