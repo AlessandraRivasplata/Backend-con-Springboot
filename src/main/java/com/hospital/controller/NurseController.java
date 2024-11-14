@@ -64,7 +64,7 @@ public class NurseController {
 
 		// If no nurses are found by name
 		if (nurses.isEmpty()) {
-			return ResponseEntity.status(404).body("Nurse not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nurse not found");
 		}
 
 		// If nurses are found by name
