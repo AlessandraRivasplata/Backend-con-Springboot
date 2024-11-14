@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - master
+      - master  # Cambiado de 'main' a 'master' según tu configuración
   pull_request:
     branches:
-      - master
+      - master  # Cambiado de 'main' a 'master' según tu configuración
 
 jobs:
   test:
@@ -19,8 +19,8 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'temurin'
+        java-version: '11'    # Usar Java 11
+        distribution: 'temurin'  # Usar distribución Temurin de OpenJDK
 
     - name: Cache Maven packages
       uses: actions/cache@v2
