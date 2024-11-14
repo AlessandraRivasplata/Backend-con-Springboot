@@ -72,7 +72,7 @@ public class NurseController {
 	}
 
 	// Endpoint to update nurse information
-	@PutMapping("/updatenurse/{id}")
+	@PutMapping("/{id}")
 	public @ResponseBody ResponseEntity<String> updateNurse(@PathVariable int id, @RequestParam String name,
 			@RequestParam String username, @RequestParam String password) {
 		// Check if any required field is null or empty
@@ -98,7 +98,7 @@ public class NurseController {
 
 
 	// Endpoint to find nurse by id
-	@GetMapping("/findnursebyid/{id}")
+	@GetMapping("/{id}")
 	public @ResponseBody ResponseEntity<?> getNurseById(@PathVariable int id) {
 	    // Find nurse by id
 	    Optional<Nurse> nurse = nurseRepository.findById(id);
@@ -113,7 +113,7 @@ public class NurseController {
 	}
 
 	// #PR05 1.1 Crear un nuevo enfermero (201 ok, 400 kc)
-	@PostMapping("/createnurse")
+	@PostMapping
 	public ResponseEntity<String> createNurse(@RequestParam String name, 
 	                                          @RequestParam String username, 
 	                                          @RequestParam String password) {
@@ -134,7 +134,7 @@ public class NurseController {
 	}
 	
 	// #PR05 1.4 Delete nurse by ID (200 OK, 404 Not Found)
-	@DeleteMapping("/deletenurse/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteNurseById(@PathVariable int id) {
 	    // Check if the nurse exists by ID
 	    if (nurseRepository.existsById(id)) {
