@@ -80,7 +80,7 @@ public class NurseControllerTest {
     // Test for Create Nurse
     @Test
     public void testCreateNurse() throws Exception {
-        mockMvc.perform(post("/nurse/createnurse")
+        mockMvc.perform(post("/nurse")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("name", "Jose Gonzalez")
                         .param("username", "jgonzalez")
@@ -97,7 +97,7 @@ public class NurseControllerTest {
 
         when(nurseRepository.findById(id)).thenReturn(Optional.of(nurse));
 
-        mockMvc.perform(get("/nurse/findnursebyid/" + id))
+        mockMvc.perform(get("/nurse/" + id))
                 .andExpect(status().isOk());
     }
 
@@ -111,7 +111,7 @@ public class NurseControllerTest {
 
         when(nurseRepository.findById(id)).thenReturn(Optional.of(nurse));
 
-        mockMvc.perform(put("/nurse/updatenurse/" + id)
+        mockMvc.perform(put("/nurse/" + id)
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("name", "Paco Gomez")
                         .param("username", "pgomez")
@@ -126,7 +126,8 @@ public class NurseControllerTest {
 
         when(nurseRepository.existsById(id)).thenReturn(true);
 
-        mockMvc.perform(delete("/nurse/deletenurse/" + id))
-                .andExpect(status().isOk());
+        mockMvc.perform(delete("/nurse/" + id))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Nurse deleted successfully"));
     }
 }
