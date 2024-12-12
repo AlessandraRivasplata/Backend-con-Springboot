@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class Nurse {
@@ -22,6 +23,11 @@ public class Nurse {
 
 	@JsonProperty("password")
 	private String password;
+	
+	// nuevo campo para imagenes
+	@Lob
+	@JsonProperty("profileImage")
+	private byte[] profileImage;
 
 	public Integer getId() {
 		return id;
@@ -55,4 +61,11 @@ public class Nurse {
 		this.password = password;
 	}
 
+	public byte[] getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(byte[] profileImagePath) {
+		this.profileImage = profileImagePath;
+	}
 }

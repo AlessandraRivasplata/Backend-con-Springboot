@@ -16,8 +16,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hospital.dao.NurseRepository;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.io.IOException;
+
 
 import entity.Nurse;
 
@@ -147,6 +153,53 @@ public class NurseController {
 	}
 
 
+@PostMapping("/uploadImage/{id}")
+public ResponseEntity<String> uploadNurseImage(@PathVariable int id, @RequestParam("image") MultipartFile imageFile) {
+    
+    if (imageFile.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: No file provided");
+    }
+
+   
+    Optional<Nurse> nurseOptional = nurseRepository.findById(id);
+    if (!nurseOptional.isPresent()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Nurse not found");
+    }
+
+    try {
+        // Obtiene los datos binarios de la imagen
+        byte[] imageBytes = imageFile.getBytes();
+
+        
+        Nurse nurse = nurseOptional.get();
+        nurse.setProfileImage(imageBytes);
+        nurseRepository.save(nurse);
+
+        return ResponseEntity.ok("Image uploaded and saved successfully");
+    } catch (IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: Could not upload the image");
+    }
 }
+/* recuperar la imagen
+@GetMapping("/getImage/{id}")
+public ResponseEntity<byte[]> getNurseImage(@PathVariable int id) {
+    // Busca al enfermero por ID
+    Optional<Nurse> nurseOptional = nurseRepository.findById(id);
+    if (!nurseOptional.isPresent()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 
+    Nurse nurse = nurseOptional.get();
+    byte[] image = nurse.getProfileImage();
 
+    if (image == null) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); 
+    }
+
+    // Retorna la imagen como un archivo binario
+    return ResponseEntity.ok()
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE) 
+            .body(image);
+}*/
+
+}
