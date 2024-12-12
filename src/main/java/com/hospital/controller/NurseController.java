@@ -52,24 +52,26 @@ public class NurseController {
 	}
 
 	// Endpoint to find nurses by name
-	@GetMapping("/findnursebyname")
-	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
-		// Check if name is not null or empty
-		if (name == null || name.trim().isEmpty()) {
-			return ResponseEntity.badRequest().body("Invalid name");
-		}
+	@GetMapping("/nursebyname/{name}")
+	public @ResponseBody ResponseEntity<?> getNursesByName(@PathVariable String name) {
+	        // Check if name is not null or empty
+	        if (name == null || name.trim().isEmpty()) {
+	        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid name");
+	        }
 
-		// Search nurse by name
-		List<Nurse> nurses = nurseRepository.findByNameContaining(name);
+	        // Search nurse by name
+	        List<Nurse> nurses = nurseRepository.findByNameContaining(name);
 
-		// If no nurses are found by name
-		if (nurses.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nurse not found");
-		}
+	        // If no nurses are found by name
+	        if (nurses.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nurse not found");
+	        }
+	        
+	        // If nurses are found by name
+			return ResponseEntity.ok(nurses);
 
-		// If nurses are found by name
-		return ResponseEntity.ok(nurses);
 	}
+
 
 	// Endpoint to update nurse information
 	@PutMapping("/{id}")
