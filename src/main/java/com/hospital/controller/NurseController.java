@@ -29,13 +29,14 @@ public class NurseController {
 
 	// Endpoint to show all data from all nurses
 	@GetMapping(path = "/allnurses")
-	public ResponseEntity<Iterable<Nurse>> getAllNurses() {
-		Iterable<Nurse> nurses = nurseRepository.findAll();
-		return ResponseEntity.ok(nurses);
+	public ResponseEntity<NursesWrapper> getAllNurses() {
+	    List<Nurse> nurses = (List<Nurse>) nurseRepository.findAll();
+	    NursesWrapper wrapper = new NursesWrapper(nurses);
+	    return ResponseEntity.ok(wrapper);
 	}
 
 	// Endpoint for login
-	@PostMapping("/login")//testpipeline
+	@PostMapping("/login")
 	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
 	    // Directly search for a nurse with the provided username and password
 	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
@@ -148,5 +149,22 @@ public class NurseController {
 
 
 }
+class NursesWrapper {
+    private List<Nurse> nurses;
+
+    // Constructor, getters y setters
+    public NursesWrapper(List<Nurse> nurses) {
+        this.nurses = nurses;
+    }
+
+    public List<Nurse> getNurses() {
+        return nurses;
+    }
+
+    public void setNurses(List<Nurse> nurses) {
+        this.nurses = nurses;
+    }
+}
+
 
 
