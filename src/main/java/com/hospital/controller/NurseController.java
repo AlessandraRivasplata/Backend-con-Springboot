@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -115,24 +116,22 @@ public class NurseController {
 
 	// #PR05 1.1 Crear un nuevo enfermero (201 ok, 400 kc)
 	@PostMapping
-	public ResponseEntity<String> createNurse(@RequestParam String name, 
-	                                          @RequestParam String username, 
-	                                          @RequestParam String password) {
-		// Validate that the data is not empty
-	    if (name == null || name.isEmpty() || username == null || username.isEmpty() || password == null || password.isEmpty()) {
+	public ResponseEntity<String> createNurse(@RequestBody Nurse nurse) {
+	    // Validar datos
+	    if (nurse.getName() == null || nurse.getName().isEmpty() ||
+	        nurse.getUsername() == null || nurse.getUsername().isEmpty() ||
+	        nurse.getPassword() == null || nurse.getPassword().isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");
 	    }
 
-	 // Create and save the new nurse
-	    Nurse newNurse = new Nurse();
-	    newNurse.setName(name);
-	    newNurse.setUsername(username);
-	    newNurse.setPassword(password);
+	    // Guardar la enfermera
+	    Nurse savedNurse = nurseRepository.save(nurse);
 
-	    nurseRepository.save(newNurse);
-	    
+	    // Respuesta de éxito
 	    return ResponseEntity.status(HttpStatus.CREATED).body("Nurse created successfully");
 	}
+
+
 	
 	// #PR05 1.4 Delete nurse by ID (200 OK, 404 Not Found)
 	@DeleteMapping("/{id}")
