@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hospital.dao.NurseRepository;
 
 import entity.Nurse;
+import entity.RemoteMessage;
 
 @Controller
 @RequestMapping(path = "/nurse")
@@ -38,21 +39,20 @@ public class NurseController {
 
 	// Endpoint for login
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-	    // Directly search for a nurse with the provided username and password
-	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
+	public @ResponseBody ResponseEntity<Nurse> login(@RequestParam String username, @RequestParam String password) {
+		// Search for a nurse with the provided username and password
+		Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
 
-	    if (nurse.isPresent()) {
-	        System.out.println("Login successful: " + nurse.get().getUsername());
-	        return ResponseEntity.ok(Boolean.TRUE);
-	    }
+		if (nurse.isPresent()) {
+		    // If the login is successful, return the Nurse entity with HTTP status 200 (OK)
+		    System.out.println("Login successful: " + nurse.get().getUsername());
+		    return ResponseEntity.ok(nurse.get());
+		}
 
-
-	    // If no matching nurse is found, return 401 Unauthorized status
-	    System.out.println("Unsuccessful login: " + username);
-	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+		// If no matching nurse is found, return HTTP status 401 (Unauthorized) with an empty body
+		System.out.println("Unsuccessful login: " + username);
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
-
 	// Endpoint to find nurses by name
 	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
@@ -116,19 +116,21 @@ public class NurseController {
 
 	// #PR05 1.1 Crear un nuevo enfermero (201 ok, 400 kc)
 	@PostMapping
-	public ResponseEntity<String> createNurse(@RequestBody Nurse nurse) {
+	public ResponseEntity<RemoteMessage> createNurse(@RequestBody Nurse nurse) {
 	    // Validar datos
 	    if (nurse.getName() == null || nurse.getName().isEmpty() ||
 	        nurse.getUsername() == null || nurse.getUsername().isEmpty() ||
 	        nurse.getPassword() == null || nurse.getPassword().isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");
+	    	return ResponseEntity.ok(new RemoteMessage("Error: Invalid Data!"));
+	        //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid Data");
 	    }
 
 	    // Guardar la enfermera
 	    Nurse savedNurse = nurseRepository.save(nurse);
 
 	    // Respuesta de éxito
-	    return ResponseEntity.status(HttpStatus.CREATED).body("Nurse created successfully");
+	    return ResponseEntity.ok(new RemoteMessage("Nurse created successfully"));
+	    //return ResponseEntity.status(HttpStatus.CREATED).body("Nurse created successfully");
 	}
 
 
