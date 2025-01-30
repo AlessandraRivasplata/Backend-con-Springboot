@@ -22,6 +22,7 @@ import com.hospital.dao.NurseRepository;
 
 import entity.Nurse;
 import entity.RemoteMessage;
+import datatransfer.NursesWrapper;
 
 @Controller
 @RequestMapping(path = "/nurse")
@@ -149,22 +150,6 @@ public class NurseController {
 	}
 
 
-}
-class NursesWrapper {
-    private List<Nurse> nurses;
-
-    // Constructor, getters y setters
-    public NursesWrapper(List<Nurse> nurses) {
-        this.nurses = nurses;
-    }
-
-    public List<Nurse> getNurses() {
-        return nurses;
-    }
-
-    public void setNurses(List<Nurse> nurses) {
-        this.nurses = nurses;
-    }
 }
 
 
