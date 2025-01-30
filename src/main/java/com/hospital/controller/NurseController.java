@@ -39,19 +39,19 @@ public class NurseController {
 
 	// Endpoint for login
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity<Boolean> login(@RequestParam String username, @RequestParam String password) {
-	    // Directly search for a nurse with the provided username and password
-	    Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
+	public @ResponseBody ResponseEntity<Nurse> login(@RequestParam String username, @RequestParam String password) {
+		// Search for a nurse with the provided username and password
+		Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
 
-	    if (nurse.isPresent()) {
-	        System.out.println("Login successful: " + nurse.get().getUsername());
-	        return ResponseEntity.ok(Boolean.TRUE);
-	    }
+		if (nurse.isPresent()) {
+		    // If the login is successful, return the Nurse entity with HTTP status 200 (OK)
+		    System.out.println("Login successful: " + nurse.get().getUsername());
+		    return ResponseEntity.ok(nurse.get());
+		}
 
-
-	    // If no matching nurse is found, return 401 Unauthorized status
-	    System.out.println("Unsuccessful login: " + username);
-	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+		// If no matching nurse is found, return HTTP status 401 (Unauthorized) with an empty body
+		System.out.println("Unsuccessful login: " + username);
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
 
 	// Endpoint to find nurses by name
