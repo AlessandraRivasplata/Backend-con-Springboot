@@ -53,7 +53,6 @@ public class NurseController {
 		System.out.println("Unsuccessful login: " + username);
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
-
 	// Endpoint to find nurses by name
 	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {
