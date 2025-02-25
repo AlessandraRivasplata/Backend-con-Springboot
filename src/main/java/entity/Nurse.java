@@ -1,7 +1,6 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,49 +9,71 @@ import jakarta.persistence.Id;
 @Entity
 public class Nurse {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@JsonProperty("name")
-	private String name;
+    @JsonProperty("nurse_number")
+    private Integer nurseNumber;
 
-	@JsonProperty("username")
-	private String username;
+    @JsonProperty("name")
+    private String name;
 
-	@JsonProperty("password")
-	private String password;
+    @JsonProperty("username")
+    private String username;
 
-	public Integer getId() {
-		return id;
-	}
+    @JsonProperty("password")
+    private String password;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @JsonProperty("email")
+    private String email;
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public Integer getNurseNumber() {
+        return nurseNumber;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setNurseNumber(Integer nurseNumber) {
+        this.nurseNumber = nurseNumber;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
+
