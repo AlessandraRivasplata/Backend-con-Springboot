@@ -40,20 +40,21 @@ public class NurseController {
 
 	// Endpoint for login
 	@PostMapping("/login")
-	public @ResponseBody ResponseEntity<Nurse> login(@RequestParam String username, @RequestParam String password) {
-		// Search for a nurse with the provided username and password
-		Optional<Nurse> nurse = nurseRepository.findByUsernameAndPassword(username, password);
+	public @ResponseBody ResponseEntity<Nurse> login(@RequestParam Integer nurseNumber) {
+	    // Search for a nurse with the provided nurseNumber
+	    Optional<Nurse> nurse = nurseRepository.findByNurseNumber(nurseNumber);
 
-		if (nurse.isPresent()) {
-		    // If the login is successful, return the Nurse entity with HTTP status 200 (OK)
-		    System.out.println("Login successful: " + nurse.get().getUsername());
-		    return ResponseEntity.ok(nurse.get());
-		}
+	    if (nurse.isPresent()) {
+	        // If the login is successful, return the Nurse entity with HTTP status 200 (OK)
+	        System.out.println("Login successful: Nurse Number " + nurse.get().getNurseNumber());
+	        return ResponseEntity.ok(nurse.get());
+	    }
 
-		// If no matching nurse is found, return HTTP status 401 (Unauthorized) with an empty body
-		System.out.println("Unsuccessful login: " + username);
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+	    // If no matching nurse is found, return HTTP status 401 (Unauthorized) with an empty body
+	    System.out.println("Unsuccessful login: Nurse Number " + nurseNumber);
+	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
+	
 	// Endpoint to find nurses by name
 	@GetMapping("/findnursebyname")
 	public @ResponseBody ResponseEntity<?> getNursesByName(@RequestParam(required = false) String name) {

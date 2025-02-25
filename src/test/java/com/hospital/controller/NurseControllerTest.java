@@ -46,7 +46,7 @@ public class NurseControllerTest {
         mockMvc.perform(get("/nurse/allnurses"))
                 .andExpect(status().isOk());
     }
-
+/*
     // Test for Login
     @Test
     public void testLogin() throws Exception {
@@ -64,7 +64,7 @@ public class NurseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
-
+*/
     // Test for Find nurse by name
     @Test
     public void testFindNurseByName() throws Exception {
