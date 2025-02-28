@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hospital.dao.PatientRepository;
 
-import datatransfer.PatientsWrapper;
+import datatransfer.Wrapper;
 import entity.Patient;
 
 @Controller
@@ -25,10 +25,10 @@ public class PatientController {
 	private PatientRepository patientRepository;
 
 	// Endpoint to show all data from all patients
-	@GetMapping(path = "/all") // getallpatients
-	public ResponseEntity<PatientsWrapper> getAllPatients() {
+	@GetMapping("/all")
+	public ResponseEntity<Wrapper<Patient>> getAllPatients() {
 		List<Patient> patients = (List<Patient>) patientRepository.findAll();
-		PatientsWrapper wrapper = new PatientsWrapper(patients);
+		Wrapper<Patient> wrapper = new Wrapper<Patient>(patients);
 		return ResponseEntity.ok(wrapper);
 	}
 

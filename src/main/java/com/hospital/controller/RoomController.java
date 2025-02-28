@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hospital.dao.RoomRepository;
 
-import datatransfer.RoomsWrapper;
+import datatransfer.Wrapper;
 import entity.Room;
 
 @Controller
@@ -22,9 +22,9 @@ public class RoomController {
 
 	// Endpoint to show all data from all rooms
 	@GetMapping(path = "/all")
-	public ResponseEntity<RoomsWrapper> getAllRooms() {
+	public ResponseEntity<Wrapper<Room>> getAllRooms() {
 		List<Room> rooms = (List<Room>) roomRepository.findAll();
-		RoomsWrapper wrapper = new RoomsWrapper(rooms);
+		Wrapper<Room> wrapper = new Wrapper<Room>(rooms);
 		return ResponseEntity.ok(wrapper);
 	}
 }

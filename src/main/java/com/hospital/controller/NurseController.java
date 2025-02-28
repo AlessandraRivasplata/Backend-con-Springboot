@@ -18,16 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hospital.dao.NurseRepository;
-import com.hospital.dao.PatientRepository;
-import com.hospital.dao.RoomRepository;
 
 import entity.Nurse;
-import entity.Patient;
 import entity.RemoteMessage;
-import entity.Room;
-import datatransfer.NursesWrapper;
-import datatransfer.RoomsWrapper;
-import datatransfer.PatientsWrapper;
+import datatransfer.Wrapper;
 
 @Controller
 @RequestMapping(path = "/nurse")
@@ -37,9 +31,9 @@ public class NurseController {
 
 	// Endpoint to show all data from all nurses
 	@GetMapping(path = "/allnurses")
-	public ResponseEntity<NursesWrapper> getAllNurses() {
+	public ResponseEntity<Wrapper<Nurse>> getAllNurses() {
 	    List<Nurse> nurses = (List<Nurse>) nurseRepository.findAll();
-	    NursesWrapper wrapper = new NursesWrapper(nurses);
+	    Wrapper<Nurse> wrapper = new Wrapper<Nurse>(nurses);
 	    return ResponseEntity.ok(wrapper);
 	}
 	
