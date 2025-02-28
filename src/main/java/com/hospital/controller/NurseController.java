@@ -66,6 +66,39 @@ public class NurseController {
 		return ResponseEntity.ok(wrapper);
 	}
 	
+	// Endpoint to get all patients by room ID
+	@GetMapping("/allpatientsbyroomid/{id}")
+	public ResponseEntity<?> getAllPatientsByRoomId(@PathVariable("id") Integer idRoom) {
+	    List<Patient> patients = patientRepository.findByRoom_IdRoom(idRoom);
+
+	    if (patients.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No patients found for the given room ID");
+	    }
+
+	    return ResponseEntity.ok(patients);
+	}
+	
+	// Endpoint to find a patient by ID
+	@GetMapping("/findpatientbyid")
+	public @ResponseBody ResponseEntity<?> getPatientById(@RequestParam Integer id) {
+	    // Check if ID is null
+	    if (id == null) {
+	        return ResponseEntity.badRequest().body("Invalid ID");
+	    }
+
+	    // Search patient by ID
+	    Optional<Patient> patient = patientRepository.findById(id);
+
+	    // If no patient is found by ID
+	    if (patient.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
+	    }
+
+	    // If patient is found
+	    return ResponseEntity.ok(patient.get());
+	}
+
+
 	
 	// Endpoint for login
 	@PostMapping("/login")
