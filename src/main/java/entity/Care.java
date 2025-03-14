@@ -23,9 +23,9 @@ public class Care {
     @JoinColumn(name = "idNurse", nullable = false)
     private Nurse nurse;
 
-    @ManyToOne
-    @JoinColumn(name = "idDrainage", nullable = false)
-    private Drainage drainage;
+    @JsonProperty("drainage")
+    @Column(name = "drainage", length = 255, nullable = true)
+    private String drainage;
 
     @JsonProperty("systolic_bp")
     @Column(name = "systolic_bp", nullable = false)
@@ -56,6 +56,10 @@ public class Care {
     @Column(name = "recorded_at", nullable = false)
     private Date recordedAt;
 
+    @JsonProperty("observations_en")
+    @Column(name = "observations_en", length = 500, nullable = true)
+    private String observationsEn;
+
     // Getters y Setters
     public Integer getIdCare() {
         return idCare;
@@ -81,11 +85,11 @@ public class Care {
         this.nurse = nurse;
     }
 
-    public Drainage getDrainage() {
+    public String getDrainage() {
         return drainage;
     }
 
-    public void setDrainage(Drainage drainage) {
+    public void setDrainage(String drainage) {
         this.drainage = drainage;
     }
 
@@ -144,5 +148,12 @@ public class Care {
     public void setRecordedAt(Date recordedAt) {
         this.recordedAt = recordedAt;
     }
-}
 
+    public String getObservationsEn() {
+        return observationsEn;
+    }
+
+    public void setObservationsEn(String observationsEn) {
+        this.observationsEn = observationsEn;
+    }
+}

@@ -15,11 +15,11 @@ public class Patient {
     private Integer idPatient;
 
     @ManyToOne
-    @JoinColumn(name = "id_room", nullable = false)
+    @JoinColumn(name = "id_room", nullable = true)
     private Room room;
 
     @ManyToOne
-    @JoinColumn(name = "id_diagnosis", nullable = false)
+    @JoinColumn(name = "id_diagnosis", nullable = true)
     private Diagnosis diagnosis;
 
     @JsonProperty("name")
@@ -58,6 +58,22 @@ public class Patient {
     @JsonProperty("familiar_info")
     @Column(name = "familiar_info", length = 500)
     private String familiarInfo;
+
+    @JsonProperty("mobilizations")
+    @Column(name = "mobilizations", length = 255, nullable = true)
+    private String mobilizations;
+
+    @JsonProperty("sitting_tolerance")
+    @Column(name = "sitting_tolerance", length = 255, nullable = false)
+    private String sittingTolerance;
+
+    @JsonProperty("postural_changes")
+    @Column(name = "postural_changes", length = 255, nullable = true)
+    private String posturalChanges;
+
+    @JsonProperty("observations")
+    @Column(name = "observations", length = 500, nullable = true)
+    private String observations;
 
     // Getters y Setters
     public Integer getIdPatient() {
@@ -154,5 +170,37 @@ public class Patient {
 
     public void setFamiliarInfo(String familiarInfo) {
         this.familiarInfo = familiarInfo;
+    }
+
+    public String getMobilizations() {
+        return mobilizations;
+    }
+
+    public void setMobilizations(String mobilizations) {
+        this.mobilizations = mobilizations;
+    }
+
+    public String getSittingTolerance() {
+        return sittingTolerance;
+    }
+
+    public void setSittingTolerance(String sittingTolerance) {
+        this.sittingTolerance = sittingTolerance;
+    }
+
+    public String getPosturalChanges() {
+        return posturalChanges;
+    }
+
+    public void setPosturalChanges(String posturalChanges) {
+        this.posturalChanges = posturalChanges;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
     }
 }
