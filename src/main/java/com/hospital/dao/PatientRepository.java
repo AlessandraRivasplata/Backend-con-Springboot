@@ -9,7 +9,8 @@ import entity.Patient;
 
 public interface PatientRepository extends CrudRepository<Patient, Integer> {
     
-	@Query("SELECT n FROM Patient n WHERE n.room.id = :id")
-	List<Patient> findByRoom_IdRoom(Integer id);
+    @Query("SELECT n FROM Patient n WHERE n.room.roomNumber = :roomNumber")
+    List<Patient> findByRoom_RoomNumber(Integer roomNumber);
 }
+
 

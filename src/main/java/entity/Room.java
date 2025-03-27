@@ -1,6 +1,8 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +18,7 @@ public class Room {
     private Integer id;
 
     @JsonProperty("room_number")
+    @Column(name = "room_number", unique = true)
     private Integer roomNumber;
 
     @JsonProperty("floor")
@@ -45,3 +48,4 @@ public class Room {
         this.floor = floor;
     }
 }
+

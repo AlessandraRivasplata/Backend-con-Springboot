@@ -15,13 +15,13 @@ public class Patient {
     private Integer idPatient;
 
     @ManyToOne
-    @JoinColumn(name = "id_room", nullable = false)
+    @JoinColumn(name = "room_number", referencedColumnName = "room_number", nullable = false)
     private Room room;
-
+    /*
     @ManyToOne
     @JoinColumn(name = "id_diagnosis", nullable = false)
     private Diagnosis diagnosis;
-
+    */
     @JsonProperty("name")
     @Column(name = "name", length = 255, nullable = false)
     private String name;
@@ -75,7 +75,7 @@ public class Patient {
     public void setRoom(Room room) {
         this.room = room;
     }
-
+    /*
     public Diagnosis getDiagnosis() {
         return diagnosis;
     }
@@ -83,7 +83,7 @@ public class Patient {
     public void setDiagnosis(Diagnosis diagnosis) {
         this.diagnosis = diagnosis;
     }
-
+    */
     public String getName() {
         return name;
     }

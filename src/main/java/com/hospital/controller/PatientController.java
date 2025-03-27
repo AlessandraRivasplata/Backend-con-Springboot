@@ -32,11 +32,10 @@ public class PatientController {
 		return ResponseEntity.ok(wrapper);
 	}
 
-	// Endpoint to get all patients by room ID, wrapped in a Wrapper
-	@GetMapping("/byroomid/{id}") // findpatientsbyROOMid
-	public ResponseEntity<Wrapper<Patient>> getAllPatientsByRoomId(@PathVariable("id") Integer idRoom) {
-	    // Search for all patients in the specified room
-	    List<Patient> patients = patientRepository.findByRoom_IdRoom(idRoom);
+	@GetMapping("/byroomnumber/{roomNumber}") // findpatientsbyROOMnumber
+	public ResponseEntity<Wrapper<Patient>> getAllPatientsByRoomNumber(@PathVariable("roomNumber") Integer roomNumber) {
+	    // Search for all patients in the specified room number
+	    List<Patient> patients = patientRepository.findByRoom_RoomNumber(roomNumber);
 
 	    // Return the patients wrapped in a Wrapper (empty list if no patients found)
 	    Wrapper<Patient> wrapper = new Wrapper<>(patients);
