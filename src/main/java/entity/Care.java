@@ -23,10 +23,6 @@ public class Care {
     @JoinColumn(name = "idNurse", nullable = false)
     private Nurse nurse;
 
-    @ManyToOne
-    @JoinColumn(name = "idDrainage", nullable = false)
-    private Drainage drainage;
-
     @JsonProperty("systolic_bp")
     @Column(name = "systolic_bp", nullable = false)
     private Integer systolicBp;
@@ -50,11 +46,39 @@ public class Care {
     @JsonProperty("oxygen_saturation")
     @Column(name = "oxygen_saturation", precision = 5, scale = 2, nullable = false)
     private BigDecimal oxygenSaturation;
+    
+    @JsonProperty("drainage_type")
+    @Column(name = "drainageType", length = 255)
+    private String drainageType;
 
+    @JsonProperty("drainage_debit")
+    @Column(name = "drainageDebit")
+    private Integer drainageDebit;
+    
+    @JsonProperty("hygine_type")
+    @Column(name = "hygieneType", length = 255)
+    private String hygieneType;
+
+    @JsonProperty("sedation")
+    @Column(name = "sedation", length = 255)
+    private String sedation;
+    
+    @JsonProperty("ambulation")
+    @Column(name = "ambulation", length = 255)
+    private String ambulation;
+    
+    @JsonProperty("postural_changes")
+    @Column(name = "posturalChanges", length = 255)
+    private String posturalChanges;
+    
     @JsonProperty("recorded_at")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "recorded_at", nullable = false)
     private Date recordedAt;
+    
+    @JsonProperty("note")
+    @Column(name = "note", length = 500)
+    private String note;
 
     // Getters y Setters
     public Integer getIdCare() {
@@ -79,16 +103,9 @@ public class Care {
 
     public void setNurse(Nurse nurse) {
         this.nurse = nurse;
-    }
 
-    public Drainage getDrainage() {
-        return drainage;
     }
-
-    public void setDrainage(Drainage drainage) {
-        this.drainage = drainage;
-    }
-
+    
     public Integer getSystolicBp() {
         return systolicBp;
     }
