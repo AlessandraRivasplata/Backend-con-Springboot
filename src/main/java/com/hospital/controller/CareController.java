@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hospital.dao.CareRepository;
@@ -53,4 +55,15 @@ public class CareController {
 	    // If care is found, return the care data
 	    return ResponseEntity.ok(care.get());
 	}
+	
+	@PostMapping
+    public ResponseEntity<?> createCare(@RequestBody Care care) {
+        try {
+            careRepository.save(care);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Cura creada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al crear la cura: " + e.getMessage());
+        }
+    }
 }
