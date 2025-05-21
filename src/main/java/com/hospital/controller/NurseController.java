@@ -1,6 +1,8 @@
 package com.hospital.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +116,25 @@ public class NurseController {
 	    // If nurse is found
 	    return ResponseEntity.ok(nurse.get()); // 200 OK
 	}
+	
+	// NEW Endpoint to find nurse profile by id (returns specific fields)
+    @GetMapping("/profile/{id}")
+    public @ResponseBody ResponseEntity<?> getNurseProfileById(@PathVariable int id) {
+        Optional<Nurse> optionalNurse = nurseRepository.findById(id);
+
+        if (optionalNurse.isPresent()) {
+            Nurse nurse = optionalNurse.get();
+            Map<String, Object> profileData = new HashMap<>();
+            profileData.put("id", nurse.getId());
+            profileData.put("name", nurse.getName());
+            profileData.put("username", nurse.getUsername());
+            profileData.put("email", nurse.getEmail());
+            profileData.put("nurseNumber", nurse.getNurseNumber()); // Assuming nurseNumber might be useful too
+            return ResponseEntity.ok(profileData);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nurse profile not found");
+    }
+	
 
 	// #PR05 1.1 Crear un nuevo enfermero (201 ok, 400 kc)
 	@PostMapping
@@ -148,6 +169,16 @@ public class NurseController {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Nurse not found");
 	    }
 	}
+	
+	@GetMapping("/nurseById/{id}")
+    public ResponseEntity<Nurse> findNurseById(@PathVariable int id) {
+        Optional<Nurse> nurse = nurseRepository.findById(id);
+        if (nurse.isPresent()) {
+            return ResponseEntity.ok(nurse.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }
