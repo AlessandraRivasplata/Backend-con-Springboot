@@ -13,16 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hospital.dao.CareRepository;
 import com.hospital.dao.PatientRepository;
 
 import datatransfer.Wrapper;
 import entity.Patient;
+import entity.VitalSignsDTO;
 
 @Controller
 @RequestMapping(path = "/patient")
 public class PatientController {
 	@Autowired
 	private PatientRepository patientRepository;
+	
+	@Autowired
+    private CareRepository careRepository;
 
 	// Endpoint to show all data from all patients
 	@GetMapping("/all")
@@ -60,5 +65,20 @@ public class PatientController {
 
 		// If patient is found
 		return ResponseEntity.ok(patient.get());
+	}
+	
+	@GetMapping("/vitals/{id}")
+	public ResponseEntity<?> getVitalSignsByPatientId(@PathVariable("id") Integer id) {
+	    if (id == null) {
+	        return ResponseEntity.badRequest().body("Invalid patient ID");
+	    }
+
+	    List<VitalSignsDTO> vitals = careRepository.findVitalsByPatientId(id);
+
+	    if (vitals.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No vital signs found for this patient");
+	    }
+
+	    return ResponseEntity.ok(vitals);
 	}
 }
